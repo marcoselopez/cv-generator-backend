@@ -1,35 +1,31 @@
 require('dotenv').config();
-
-const mongoose = require('mongoose');
+require('./database/database')
 const cors = require('cors');
 const express = require('express');
 const app = express();
-const PORT = 3001;
+const port = process.env.PORT;
+
+//- ROUTES EXPORTS
+const getUsers = require('./routes/usersRoute');
+const editUser = require('./routes/usersRoute');
+const createUser = require('./routes/usersRoute');
+const deleteUser = require('./routes/usersRoute');
+const deleteAllUsers = require('./routes/usersRoute');
+const loginUser = require('./routes/loginRoute')
 
 app.use(cors());
 app.use(express.json());
 
-//- DATA
-const DATA = [
-  {
-    name: 'Emmanuel',
-    age: 8,
-    profession: 'Developer',
-    address: 'Gobernador Fernando Riera 260'
-  }
-]
+//-USERS CALL
+app.use('/', getUsers)
+app.use('/', editUser)
+app.use('/', createUser)
+app.use('/', deleteUser)
+app.use('/', deleteAllUsers)
 
-//- API ROUTES
-//GET
-app.get('/api', (request, response) => {
-  response.send(DATA)
-})
+//-LOGIN CALL
+app.use('/', loginUser)
 
-
-
-
-
-
-app.listen(PORT, () => {
-  console.log(`Server is listening at port ${PORT}`)
+app.listen(port, () => {
+  console.log(`Server is listening at port ${port}`)
 })
