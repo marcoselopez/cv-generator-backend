@@ -24,8 +24,8 @@ const userSchema = new Schema({
 })
 
 userSchema.pre('save', async function(next){
-  const salt = await bcrypt.genSalt()
-  this.password = await bcrypt.hash(this.password, salt);
+  const salt = await bcrypt.genSaltSync()
+  this.password = await bcrypt.hashSync(this.password, salt);
   next();
 })
 
